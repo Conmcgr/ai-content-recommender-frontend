@@ -7,7 +7,7 @@
       </p>
     </div>
     <div class="right-panel">
-      <img src="/assets/sparetime_logo.png" alt="sparetime Logo" class="logo">
+      <img src="/assets/sparetime_logo.png" alt="sparetime Logo" class="logo" (click)="navigateToHome()">
       <form (ngSubmit)="onSubmit()">
         <div class="form-group">
           <input type="text" placeholder="username" [(ngModel)]="username" name="username" required>

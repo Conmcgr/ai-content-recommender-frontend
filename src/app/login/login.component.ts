@@ -23,6 +23,10 @@ export class LoginComponent {
 
   constructor(private http: HttpClient, private router: Router) {}
 
+  navigateToHome() {
+    this.router.navigate(['/home']);
+  }
+
   onSubmit() {
     const loginData = {
       username: this.username,
