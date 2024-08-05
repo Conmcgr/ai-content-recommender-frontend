@@ -50,6 +50,10 @@ export class SettingsComponent {
     }
   }
 
+  navigateToHome() {
+    this.router.navigate(['/home']);
+  }
+
   logout() {
     // Logout logic
     console.log('Logged out');
