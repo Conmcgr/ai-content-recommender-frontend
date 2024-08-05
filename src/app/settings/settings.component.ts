@@ -25,11 +25,17 @@ export class SettingsComponent {
 
   constructor(private router: Router) {}
 
-  editPassword() {
+  navigateToHome() {
+    this.router.navigate(['/home']);
+  }
+
+  editPassword(event: Event) {
+    event.stopPropagation();
     this.editingPassword = true;
   }
 
-  updatePassword() {
+  updatePassword(event: Event) {
+    event.stopPropagation();
     if (this.newPassword === this.confirmNewPassword) {
       // Update password logic
       console.log('Password updated');
@@ -39,22 +45,21 @@ export class SettingsComponent {
     }
   }
 
-  deleteInterest(interest: string) {
+  deleteInterest(interest: string, event: Event) {
+    event.stopPropagation();
     this.interests = this.interests.filter(i => i !== interest);
   }
 
-  addInterest() {
+  addInterest(event: Event) {
+    event.stopPropagation();
     if (this.newInterest && !this.interests.includes(this.newInterest)) {
       this.interests.push(this.newInterest);
       this.newInterest = '';
     }
   }
 
-  navigateToHome() {
-    this.router.navigate(['/home']);
-  }
-
-  logout() {
+  logout(event: Event) {
+    event.stopPropagation();
     // Logout logic
     console.log('Logged out');
     this.router.navigate(['/login']);

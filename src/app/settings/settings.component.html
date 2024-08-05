@@ -1,32 +1,30 @@
 <div class="settings-container">
-    <div class="home-page" (click)="navigateToHome()">
-    <img src="/assets/sparetime_logo.png" alt="sparetime Logo" class="logo" />
-    <h1>Profile Settings</h1>
-    
-    <div class="profile-info">
-      <h2>Username</h2>
-      <input type="text" [(ngModel)]="username" />
-      <h2>Password</h2>
-      <button (click)="editPassword()">Change Password</button>
-      <div *ngIf="editingPassword">
-        <input type="password" placeholder="Current Password" [(ngModel)]="currentPassword" />
-        <input type="password" placeholder="New Password" [(ngModel)]="newPassword" />
-        <input type="password" placeholder="Confirm New Password" [(ngModel)]="confirmNewPassword" />
-        <button (click)="updatePassword()">Update Password</button>
-      </div>
-    </div>
+  <img src="/assets/sparetime_logo.png" alt="sparetime Logo" class="logo" (click)="navigateToHome()" />
+  <h1>Profile Settings</h1>
   
-    <div class="preferences">
-      <h2>Interests</h2>
-      <ul>
-        <li *ngFor="let interest of interests">
-          {{ interest }} <button (click)="deleteInterest(interest)">Delete</button>
-        </li>
-      </ul>
-      <input type="text" placeholder="Add new interest" [(ngModel)]="newInterest" />
-      <button (click)="addInterest()">Add Interest</button>
+  <div class="profile-info">
+    <h2>Username</h2>
+    <input type="text" [(ngModel)]="username" />
+    <h2>Password</h2>
+    <button (click)="editPassword($event)">Change Password</button>
+    <div *ngIf="editingPassword">
+      <input type="password" placeholder="Current Password" [(ngModel)]="currentPassword" />
+      <input type="password" placeholder="New Password" [(ngModel)]="newPassword" />
+      <input type="password" placeholder="Confirm New Password" [(ngModel)]="confirmNewPassword" />
+      <button (click)="updatePassword($event)">Update Password</button>
     </div>
-  
-    <button class="logout-button" (click)="logout()">Logout</button>
   </div>
-  
+
+  <div class="preferences">
+    <h2>Interests</h2>
+    <ul>
+      <li *ngFor="let interest of interests">
+        {{ interest }} <button (click)="deleteInterest(interest, $event)">Delete</button>
+      </li>
+    </ul>
+    <input type="text" placeholder="Add new interest" [(ngModel)]="newInterest" />
+    <button (click)="addInterest($event)">Add Interest</button>
+  </div>
+
+  <button class="logout-button" (click)="logout($event)">Logout</button>
+</div>
