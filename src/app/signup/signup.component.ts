@@ -37,7 +37,7 @@ export class SignupComponent {
       password: this.password
     };
 
-    this.http.post<any>('/api/register', signupData).subscribe(
+    this.http.post<any>('/api/auth/register', signupData).subscribe(
       response => {
         this.router.navigate(['/login']);
       },

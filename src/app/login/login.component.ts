@@ -33,7 +33,7 @@ export class LoginComponent {
       password: this.password
     };
 
-    this.http.post<any>('/api/login', loginData).subscribe(
+    this.http.post<any>('/api/auth/login', loginData).subscribe(
       response => {
         localStorage.setItem('token', response.token);
         this.router.navigate(['/home']);
