@@ -5,6 +5,8 @@
   <div class="profile-info">
     <h2>Username</h2>
     <input type="text" [(ngModel)]="username" />
+    <button (click)="updateUsername()">Change Username</button>
+
     <h2>Password</h2>
     <button (click)="editPassword($event)">Change Password</button>
     <div *ngIf="editingPassword">

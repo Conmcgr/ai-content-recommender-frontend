@@ -30,21 +30,50 @@ export class SettingsComponent implements OnInit {
   ngOnInit() {
     this.loadUserProfile();
   }
-
+  
   loadUserProfile() {
-    this.http.get<any>('/api/user/profile').subscribe(
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.log('No token found');
+      this.router.navigate(['/login']);
+      return;
+    }
+  
+    this.http.get<any>('/api/user/profile', {
+      headers: { Authorization: `Bearer ${token}` }
+    }).subscribe(
       response => {
         this.username = response.username;
         this.interests = response.interests;
       },
       error => {
         console.log('Error loading user profile', error);
+        this.router.navigate(['/login']);
       }
     );
   }
+  
 
   navigateToHome() {
     this.router.navigate(['/home']);
+  }
+
+  updateUsername() {
+    const token = localStorage.getItem('token');
+    const updateData = {
+      username: this.username,
+      interests: this.interests // You can pass the existing interests as well
+    };
+    this.http.put('/api/user/profile', updateData, {
+      headers: { Authorization: `Bearer ${token}` }
+    }).subscribe(
+      response => {
+        console.log('Username updated successfully');
+      },
+      error => {
+        console.log('Error updating username', error);
+      }
+    );
   }
 
   editPassword(event: Event) {
@@ -55,11 +84,21 @@ export class SettingsComponent implements OnInit {
   updatePassword(event: Event) {
     event.stopPropagation();
     if (this.newPassword === this.confirmNewPassword) {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.log('No token found');
+        this.router.navigate(['/login']);
+        return;
+      }
+  
       const passwordData = {
         currentPassword: this.currentPassword,
         newPassword: this.newPassword
       };
-      this.http.post('/api/user/update-password', passwordData).subscribe(
+  
+      this.http.post('/api/user/update-password', passwordData, {
+        headers: { Authorization: `Bearer ${token}` }
+      }).subscribe(
         response => {
           console.log('Password updated');
           this.editingPassword = false;
@@ -75,10 +114,20 @@ export class SettingsComponent implements OnInit {
       console.log('Passwords do not match');
     }
   }
+  
 
   deleteInterest(interest: string, event: Event) {
     event.stopPropagation();
-    this.http.post('/api/user/delete-interest', { interest }).subscribe(
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.log('No token found');
+      this.router.navigate(['/login']);
+      return;
+    }
+  
+    this.http.post('/api/user/delete-interest', { interest }, {
+      headers: { Authorization: `Bearer ${token}` }
+    }).subscribe(
       response => {
         this.interests = this.interests.filter(i => i !== interest);
       },
@@ -87,11 +136,21 @@ export class SettingsComponent implements OnInit {
       }
     );
   }
+  
 
   addInterest(event: Event) {
     event.stopPropagation();
     if (this.newInterest && !this.interests.includes(this.newInterest)) {
-      this.http.post('/api/user/add-interest', { interest: this.newInterest }).subscribe(
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.log('No token found');
+        this.router.navigate(['/login']);
+        return;
+      }
+  
+      this.http.post('/api/user/add-interest', { interest: this.newInterest }, {
+        headers: { Authorization: `Bearer ${token}` }
+      }).subscribe(
         response => {
           this.interests.push(this.newInterest);
           this.newInterest = '';
@@ -102,11 +161,13 @@ export class SettingsComponent implements OnInit {
       );
     }
   }
+  
 
   logout(event: Event) {
     event.stopPropagation();
-    // Implement your logout logic here, e.g., removing the JWT from local storage
+    localStorage.removeItem('token'); // Remove the JWT from local storage
     console.log('Logged out');
     this.router.navigate(['/login']);
   }
+  
 }
