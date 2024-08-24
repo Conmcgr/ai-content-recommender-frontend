@@ -5,7 +5,6 @@ import pymongo
 import random
 import torch
 from transformers import BertTokenizer, BertModel
-from sklearn.metrics.pairwise import cosine_similarity
 
 load_dotenv()
 
@@ -126,8 +125,9 @@ def store_metadata(metadata, search_tag):
         video_collection.insert_one(video_data)
         print(f'inserted video: {video_id}')
 
-initial_searches = [
-        {'search_string': 'machine learning transformers', 'num_results': 5, 'chanel_id': 'UCYO_jab_esuFRV4b17AJtAw', 'chanel_name': '3blue1brown'}, 
+def make_first_entry():
+    initial_searches = [
+    {'search_string': 'machine learning transformers', 'num_results': 5, 'chanel_id': 'UCYO_jab_esuFRV4b17AJtAw', 'chanel_name': '3blue1brown'}, 
     {'search_string': 'linear algebra', 'num_results': 5, 'chanel_id': 'UCYO_jab_esuFRV4b17AJtAw', 'chanel_name': '3blue1brown'}, 
     {'search_string': 'convolutional neural networks and computer vision', 'num_results': 5, 'chanel_id': 'UCYO_jab_esuFRV4b17AJtAw', 'chanel_name': '3blue1brown'}, 
     {'search_string': 'machine learning transformers', 'num_results': 5, 'chanel_id': 'UCYO_jab_esuFRV4b17AJtAw', 'chanel_name': '3blue1brown'},
@@ -214,6 +214,6 @@ initial_searches = [
     {'search_string': 'Geopolitics of energy', 'num_results': 10} 
 ]
 
-for search in initial_searches:
-    response = make_youtube_request(search)
-    store_metadata(response, search['search_string'])
+    for search in initial_searches:
+        response = make_youtube_request(search)
+        store_metadata(response, search['search_string'])
