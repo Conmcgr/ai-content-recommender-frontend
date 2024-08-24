@@ -50,7 +50,7 @@ def make_embedding(text):
     if(isinstance(text, str)):
         text_input = [text]
     elif(isinstance(text, list)):
-        text_input = ', '.join(text)
+        text_input = [', '.join(text)]
     else:
         print(type(text), text)
         raise ValueError('Invalid input')
