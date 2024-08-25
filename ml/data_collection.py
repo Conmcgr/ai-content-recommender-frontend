@@ -71,8 +71,7 @@ def make_embedding(text):
         outputs = bert_model(input_ids, attention_mask=attention_mask)
         embedding = outputs.last_hidden_state.mean(dim=1)
 
-    return embedding.tolist()
-
+    return embedding
 
 def store_metadata(metadata, search_tag):
     for item in metadata['items']:
@@ -102,23 +101,23 @@ def store_metadata(metadata, search_tag):
         video_data = {
             'video_id': video_id,
             'title': item['snippet']['title'],
-            'title_embedded': make_embedding(item['snippet']['title']),
+            'title_embedded': make_embedding(item['snippet']['title']).tolist(),
             'description': more_details['snippet'].get('description', item['snippet']['description']),
-            'description_embedded': make_embedding(more_details['snippet'].get('description', item['snippet']['description'])),
+            'description_embedded': make_embedding(more_details['snippet'].get('description', item['snippet']['description'])).tolist(),
             'published_at': item['snippet']['publishedAt'],
             'channel_title': item['snippet']['channelTitle'],
-            'channel_title_embedded': make_embedding(item['snippet']['channelTitle']),
+            'channel_title_embedded': make_embedding(item['snippet']['channelTitle']).tolist(),
             'channel_id': item['snippet']['channelId'],
             'thumbnails': item['snippet']['thumbnails'],
             'tags': tags,
-            'tags_embedded': [] if not tags else make_embedding(tags),
+            'tags_embedded': [] if not tags else make_embedding(tags).tolist(),
             'category': search_tag,
-            'category_embedded': make_embedding(search_tag),
+            'category_embedded': make_embedding(search_tag).tolist(),
             'duration': more_details['contentDetails'].get('duration', 'Unknown'),
             'definition': more_details['contentDetails'].get('definition', 'Unknown'),
             'dimension': more_details['contentDetails'].get('dimension', 'Unknown'),
             'licensed_content': more_details['contentDetails'].get('licensedContent', False),
-            'default_audio_language': more_details['snippet'].get('defaultAudioLanguage', 'Unknown'),
+            'default_audio_language': more_details['snippet'].get('defaultAudioLanguage', 'Unknown')
         }
 
         # Insert the new video into MongoDB
