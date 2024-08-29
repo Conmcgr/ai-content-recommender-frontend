@@ -36,7 +36,7 @@ export class StartSessionComponent {
       this.format.push(type);
     }
   }
-
+  /*
   findContent() {
     if (this.format.length === 0) {
       this.format.push('video', 'article', 'podcast'); // Default to all types if none are selected
@@ -49,8 +49,13 @@ export class StartSessionComponent {
       }
     });
   }
-
+*/
   navigateToSettings() {
     this.router.navigate(['/settings']);
   }
+
+  navigateToDisplayContent() {
+    this.router.navigate(['/display-content'], { queryParams: { vid_id1: 'OTNe0eV8418', vid_id2: '9FRleYEHkXA', vid_id3: '_qeKY0I32nk' } });
+  }
+
 }
