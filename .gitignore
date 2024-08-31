@@ -44,3 +44,4 @@ Thumbs.db
 # Environment variables
 /backend/.env
 /.env
+/recommendation_system/venv/
